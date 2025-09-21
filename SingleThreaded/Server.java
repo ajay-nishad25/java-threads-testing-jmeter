@@ -5,37 +5,40 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server{
+public class Server {
 
-    public void run() throws IOException{
+    public void run() throws IOException {
         int port = 8010;
         ServerSocket socket = new ServerSocket(port);
         socket.setSoTimeout(10000);
 
         while (true) {
-            try{
-                System.out.println("Server is listening to port "+ port);
+            try {
+                System.out.println("Server is listening to port " + port);
                 Socket acceptedConnection = socket.accept();
                 System.out.println("Connection accepted from client " + acceptedConnection.getRemoteSocketAddress());
-                PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream()); // send data to client from server
-                BufferedReader fromClient = new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream())); // incoming data from client
+                // send data to client from server
+                PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream());
+                // incoming data from client
+                BufferedReader fromClient = new BufferedReader(
+                        new InputStreamReader(acceptedConnection.getInputStream()));
                 toClient.println("Hello from the server");
                 toClient.close();
                 fromClient.close();
                 acceptedConnection.close();
 
-            }catch(IOException ex){
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
         Server server = new Server();
-        try{
+        try {
             server.run();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

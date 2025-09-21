@@ -7,16 +7,18 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-    public void run() throws UnknownHostException, IOException{
+    public void run() throws UnknownHostException, IOException {
         int port = 8010;
 
         InetAddress address = InetAddress.getByName("localhost");
-        Socket socket = new Socket(address,port);
-        PrintWriter toSocket = new PrintWriter(socket.getOutputStream()); // to send data to the server by wrtiting to the output stream
-        BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream())); // receive data from server
+        Socket socket = new Socket(address, port);
+        // to send data to the server by wrtiting to the output stream
+        PrintWriter toSocket = new PrintWriter(socket.getOutputStream());
+        // receive data from server
+        BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         toSocket.println("Hello form the client");
         String line = fromSocket.readLine();
-        System.out.println("Response from the server is : "+line);
+        System.out.println("Response from the server is : " + line);
 
         toSocket.close();
         fromSocket.close();
@@ -24,10 +26,10 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        try{
+        try {
             Client client = new Client();
             client.run();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
